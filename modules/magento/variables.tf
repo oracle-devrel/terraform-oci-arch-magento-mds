@@ -3,14 +3,42 @@
 
 variable "mysql_version" {
   description = "The version of the Mysql Shell."
-  default     = "8.0.28"
+  default     = "8.0.26"
+}
+
+variable "tenancy_ocid" {
+}
+
+variable "vcn_id" {
+  description = "The OCID of the VCN"
+  default     = ""
+}
+
+variable "magento_subnet_id" {
+  description = "The OCID of the magento subnet to create the VNIC for public/private access. "
+  default     = ""
+}
+
+variable "lb_subnet_id" {
+  description = "The OCID of the Load Balancer subnet to create the VNIC for public access. "
+  default     = ""
+}
+
+variable "bastion_subnet_id" {
+  description = "The OCID of the Bastion subnet to create the VNIC for public access. "
+  default     = ""
+}
+
+variable "fss_subnet_id" {
+  description = "The OCID of the File Storage Service subnet to create the VNIC for private access. "
+  default     = ""
 }
 
 variable "compartment_ocid" {
   description = "Compartment's OCID where VCN will be created. "
 }
 
-variable "availability_domain" {
+variable "availability_domain_name" {
   description = "The Availability Domain of the instance."
   default     = ""
 }
@@ -27,62 +55,7 @@ variable "subnet_id" {
 
 variable "shape" {
   description = "Instance shape to use for master instance. "
-  default     = "VM.Standard2.1"
-}
-
-variable "label_prefix" {
-  description = "To create unique identifier for multiple clusters in a compartment."
-  default     = ""
-}
-
-variable "assign_public_ip" {
-  description = "Whether the VNIC should be assigned a public IP address. Default 'false' do not assign a public IP address. "
-  default     = true
-}
-
-variable "image_id" {
-  description = "The OCID of an image for an instance to use. "
-  default     = ""
-}
-
-variable "vm_user" {
-  description = "The SSH user to connect to the master host."
-  default     = "opc"
-}
-
-
-variable "magento_schema" {
-  description = "Magento MySQL Schema"
-}
-
-variable "admin_username" {
-    description = "Username od the MDS admin account"
-}
-
-
-variable "admin_password" {
-    description = "Password for the admin user for MDS"
-}
-
-variable "mds_ip" {
-    description = "Private IP of the MDS Instance"
-}
-
-variable "nb_of_webserver" {
-    description = "Amount of Webservers to deploy"
-    default = 1
-}
-
-variable "use_AD" {
-  description = "Using different Availability Domain, by default use of Fault Domain"
-  type        = bool
-  default     = false
-}
-
-variable "dedicated" {
-  description = "Create a dedicated user and a dedicated database for each Webservers"
-  type        = bool
-  default     = false
+  default     = "VM.Standard.E4.Flex"
 }
 
 variable "flex_shape_ocpus" {
@@ -95,19 +68,62 @@ variable "flex_shape_memory" {
   default = 6
 }
 
-locals {
-  compute_flexible_shapes = [
-    "VM.Standard.E3.Flex",
-    "VM.Standard.E4.Flex",
-    "VM.Standard.A1.Flex",
-    "VM.Optimized3.Flex",
-    "VM.Standard3.Flex",
-    "VM.Standard4.Flex"   
-  ]
+variable "lb_shape" {
+  default = "flexible"
 }
 
-locals {
-  is_flexible_node_shape = contains(local.compute_flexible_shapes, var.shape)
+variable "flex_lb_min_shape" {
+  default = "10"
+}
+
+variable "flex_lb_max_shape" {
+  default = "100"
+}
+
+
+variable "use_bastion_service" {
+  default = false
+}
+
+variable "bastion_service_region" {
+  description = "Bastion Service Region"
+  default     = ""
+}
+
+variable "bastion_image_id" {
+  default = ""
+}
+
+variable "bastion_shape" {
+  default = "VM.Standard.E4.Flex"
+}
+
+variable "bastion_flex_shape_ocpus" {
+  default = 1
+}
+
+variable "bastion_flex_shape_memory" {
+  default = 1
+}
+
+variable "use_shared_storage" {
+  description = "Decide if you want to use shared NFS on OCI FSS"
+  default     = true
+}
+
+variable "magento_shared_working_dir" {
+  description = "Decide where to store magento data"
+  default     = "/sharedmagento"
+}
+
+variable "label_prefix" {
+  description = "To create unique identifier for multiple clusters in a compartment."
+  default     = ""
+}
+
+variable "assign_public_ip" {
+  description = "Whether the VNIC should be assigned a public IP address. Default 'false' do not assign a public IP address. "
+  default     = true
 }
 
 variable "ssh_authorized_keys" {
@@ -115,25 +131,32 @@ variable "ssh_authorized_keys" {
   default     = ""
 }
 
-variable "ssh_private_key" {
-  description = "The private key path to access instance. "
+variable "image_id" {
+  description = "The OCID of an image for an instance to use. "
   default     = ""
+}
+
+variable "vm_user" {
+  description = "The SSH user to connect to the master host."
+  default     = "opc"
 }
 
 variable "magento_name" {
-  description = "Magento Database User Name."
+  description = "magento Database User Name."
 }
 
 variable "magento_password" {
-  description = "Magento Database User Password."
+  description = "magento Database User Password."
 }
 
-
-variable "web_ip" {
-  description = "IP of the Web Instance."
-  default     = ""
+variable "magento_schema" {
+  description = "magento MySQL Schema"
 }
 
+variable "magento_prefix" {
+  description = "magento MySQL Prefix"
+  default = "magento_"
+}
 
 variable "magento_admin_login" {
   description = "Magento Admin Username"
@@ -159,7 +182,40 @@ variable "magento_admin_email" {
   description = "Magento Admin Email"
 }
 
+variable "mds_ip" {
+    description = "Private IP of the MDS Instance"
+}
+
+variable "admin_username" {
+    description = "Username od the MDS admin account"
+}
+
+variable "admin_password" {
+    description = "Password for the admin user for MDS"
+}
+
+variable "numberOfNodes" {
+    description = "Amount of Webservers to deploy"
+    default = 1
+}
+
+# Dictionary Locals
+locals {
+  compute_flexible_shapes = [
+    "VM.Standard.E3.Flex",
+    "VM.Standard.E4.Flex",
+    "VM.Standard.A1.Flex",
+    "VM.Optimized3.Flex"
+  ]
+}
+
+# Checks if is using Flexible Compute Shapes
+locals {
+  is_flexible_node_shape = contains(local.compute_flexible_shapes, var.shape)
+  is_flexible_lb_shape   = var.lb_shape == "flexible" ? true : false
+}
+
 variable "defined_tags" {
-  description = "Defined tags for WordPress host."
+  description = "Defined tags for Magento host."
   default     = ""
 }
