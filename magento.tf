@@ -2,7 +2,7 @@
 ## All rights reserved. The Universal Permissive License (UPL), Version 1.0 as shown at http://oss.oracle.com/licenses/upl
 
 module "magento" {
-  source                    = "./modules/magento"
+  source                    = "github.com/oracle-devrel/terraform-oci-arch-magento"
   tenancy_ocid              = var.tenancy_ocid
   vcn_id                    = oci_core_virtual_network.magento_mds_vcn.id
   numberOfNodes             = var.numberOfNodes
