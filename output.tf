@@ -2,24 +2,24 @@
 ## All rights reserved. The Universal Permissive License (UPL), Version 1.0 as shown at http://oss.oracle.com/licenses/upl
 
 output "magento_home_URL" {
-  value = "http://${module.magento.public_ip[0]}/"
+  value = "http://${module.oci-arch-magento.public_ip[0]}/"
 }
 
-output "generated_ssh_private_key" {
-  value     = module.magento.generated_ssh_private_key
-  sensitive = true
+output "magento_backend_URL" {
+  value = "http://${module.oci-arch-magento.public_ip[0]}/index.php/${var.magento_backend_frontname}/"
 }
 
-output "magento_name" {
-  value = var.magento_name
+output "magento_backend_username" {
+  value = "admin"
 }
 
-output "magento_password" {
+output "magento_backend_password" {
   value = var.magento_password
 }
 
-output "magento_database" {
-  value = var.magento_schema
+output "generated_ssh_private_key" {
+  value     = module.oci-arch-magento.generated_ssh_private_key
+  sensitive = true
 }
 
 output "mds_instance_ip" {

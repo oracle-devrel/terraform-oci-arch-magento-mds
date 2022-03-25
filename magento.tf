@@ -1,7 +1,7 @@
 ## Copyright (c) 2022 Oracle and/or its affiliates.
 ## All rights reserved. The Universal Permissive License (UPL), Version 1.0 as shown at http://oss.oracle.com/licenses/upl
 
-module "magento" {
+module "oci-arch-magento" {
   source                    = "github.com/oracle-devrel/terraform-oci-arch-magento"
   tenancy_ocid              = var.tenancy_ocid
   vcn_id                    = oci_core_virtual_network.magento_mds_vcn.id
@@ -24,6 +24,7 @@ module "magento" {
   magento_password          = var.magento_password
   magento_admin_password    = var.magento_admin_password
   magento_admin_email       = var.magento_admin_email
+  magento_backend_frontname = var.magento_backend_frontname
   display_name              = var.magento_instance_name
   flex_shape_ocpus          = var.node_flex_shape_ocpus
   flex_shape_memory         = var.node_flex_shape_memory

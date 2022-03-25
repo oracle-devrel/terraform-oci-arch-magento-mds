@@ -7,7 +7,7 @@ variable "private_key_path" {}
 
 variable "release" {
   description = "Reference Architecture Release (OCI Architecture Center)"
-  default     = "1.1"
+  default     = "1.2"
 }
 
 variable "ssh_public_key" {
@@ -144,6 +144,11 @@ variable "magento_schema" {
 variable "mds_instance_name" {
   description = "Name of the MDS instance"
   default     = "magentoMDS"
+}
+
+variable "magento_backend_frontname" {
+  description = "Magento Admin Backend Frontname"
+  default     = "magento_admin"
 }
 
 variable "mysql_is_highly_available" {
