@@ -115,10 +115,18 @@ module "oci-arch-magento-mds" {
 ```
 
 ### Testing your Deployment
-After the deployment is finished, you can access and configure Magento by picking magento_home_URL from the output and pasting into web browser window.
+After the deployment is finished, you can access Magento home page by picking magento_home_URL from the output and pasting it into web browser window.
 
 ````
-magento_home_URL = http://193.122.198.20/
+magento_home_URL = "http://193.122.198.20/"
+`````
+
+If you wan to access Magento backend then you need to pickup magento_backend_URL from the output and paste it into web browser window. Then use magento_backend_username and magento_backend_password to authorize the access to Magento backend pages.
+
+````
+magento_backed_URL       = "http://193.122.198.20/index.php/magento_admin/"
+magento_backend_password = "BEstrO0ng_#11"
+magento_backend_username = "admin"
 `````
 
 ## Contributing
