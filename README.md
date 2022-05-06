@@ -6,7 +6,7 @@ Deploy Magento e-commerce on Oracle Cloud Intrastructure (OCI) and MySQL Databas
 
 This Terraform code spins up one or more Oracle Cloud Infrastructure (OCI) instances after creating the required OCI networking components, deploys Magento on the instance(s) and creates a MySQL Database System (with High Availability if desired).
 
-For more details on the architecture, see [_Deploy Magento CMS on Oracle Linux with MySQL Database Service_](https://docs.oracle.com/en/solutions/magento-with-mds/index.html)
+For more details on the architecture, see [_Deploy Magento eCommerce on Oracle Linux with MySQL Database Service_](https://docs.oracle.com/en/solutions/magento-with-mds/index.html)
 
 ## Architecture Diagram 
 
