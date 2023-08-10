@@ -138,7 +138,7 @@ variable "image_id" {
 
 variable "vm_user" {
   description = "The SSH user to connect to the master host."
-  default     = "opc"
+  default     = "ubuntu"
 }
 
 variable "magento_name" {

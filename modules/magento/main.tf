@@ -10,7 +10,7 @@ data "oci_identity_availability_domains" "ADs" {
 }
 
 data "template_file" "install_php" {
-  template = file("${path.module}/scripts/install_php74.sh")
+  template = file("${path.module}/scripts/install_php82.sh")
 
   vars = {
     mysql_version = var.mysql_version
@@ -54,7 +54,7 @@ data "template_cloudinit_config" "cloud_init" {
 }
 
 locals {
-  php_script        = "~/install_php74.sh"
+  php_script        = "~/install_php82.sh"
   security_script   = "~/configure_local_security.sh"
   create_magento_db = "~/create_magento_db.sh"
   install_magento   = "~/install_magento.sh" 

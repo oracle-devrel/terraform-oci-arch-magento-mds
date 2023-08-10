@@ -1,17 +1,18 @@
 #!/bin/bash
 #set -x
 
-chcon -R --type httpd_sys_rw_content_t /var/www/html/app/etc
-chcon -R --type httpd_sys_rw_content_t /var/www/html/var
-chcon -R --type httpd_sys_rw_content_t /var/www/html/pub/media
-chcon -R --type httpd_sys_rw_content_t /var/www/html/pub/static
-chcon -R --type httpd_sys_rw_content_t /var/www/html/generated
+# Assuming you're using UFW (Uncomplicated Firewall) on Ubuntu for firewall management
+ufw allow 80/tcp
+ufw allow 443/tcp
+ufw reload
 
-firewall-cmd --zone=public --permanent --add-port=80/tcp
-firewall-cmd --zone=public --permanent --add-port=443/tcp
-firewall-cmd --reload
+# Ubuntu typically doesn't have SELinux enabled by default, but if you need similar file permission adjustments, you might use chown and chmod instead
+chown -R www-data:www-data /var/www/html/app/etc
+chown -R www-data:www-data /var/www/html/var
+chown -R www-data:www-data /var/www/html/pub/media
+chown -R www-data:www-data /var/www/html/pub/static
+chown -R www-data:www-data /var/www/html/generated
+chmod -R 755 /var/www/html
 
-setsebool -P httpd_can_network_connect=1
-setsebool -P httpd_can_network_connect_db 1
+echo "Local Security Granted!"
 
-echo "Local Security Granted !"

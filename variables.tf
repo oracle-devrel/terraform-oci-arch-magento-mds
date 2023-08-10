@@ -95,12 +95,12 @@ variable "bastion_flex_shape_memory" {
 
 variable "instance_os" {
   description = "Operating system for compute instances"
-  default     = "Oracle Linux"
+  default     = "ubuntu"
 }
 
 variable "linux_os_version" {
   description = "Operating system version for all Linux instances"
-  default     = "8"
+  default     = "20.04"
 }
 
 variable "admin_password" {

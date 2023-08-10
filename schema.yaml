@@ -501,6 +501,8 @@ variables:
     default: "8"
     enum:
       - "8"
+      - "22.04"
+      - "23.04"
 
   instance_os:
     type: enum
@@ -511,3 +513,4 @@ variables:
     default: "Oracle Linux"
     enum:
       - "Oracle Linux"
+      - "Ubuntu"
